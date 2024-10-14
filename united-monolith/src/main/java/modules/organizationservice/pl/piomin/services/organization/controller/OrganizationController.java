@@ -1,6 +1,8 @@
 package modules.organizationservice.pl.piomin.services.organization.controller;
 import java.util.List;
 import modules.organizationservice.OrganizationserviceClient;
+import modules.organizationservice.pl.piomin.services.organization.client.DepartmentClient;
+import modules.organizationservice.pl.piomin.services.organization.client.EmployeeClient;
 import modules.organizationservice.pl.piomin.services.organization.model.Organization;
 import modules.organizationservice.pl.piomin.services.organization.repository.OrganizationRepository;
 import org.slf4j.Logger;
@@ -22,6 +24,12 @@ public class OrganizationController {
 
     @Autowired
     OrganizationRepository repository;
+
+    @Autowired
+    DepartmentClient departmentClient;
+
+    @Autowired
+    EmployeeClient employeeClient;
 
     @PostMapping("/")
     public Organization add(@RequestBody
