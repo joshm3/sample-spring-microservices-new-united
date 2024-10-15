@@ -1,11 +1,4 @@
 services:
-  zipkin:
-    container_name: zipkin
-    image: openzipkin/zipkin
-    extra_hosts: [ 'host.docker.internal:host-gateway' ]
-    ports:
-      - "9411:9411"
-
   config-service:
     image: piomin/config-service:1.1-SNAPSHOT
     ports:
@@ -33,39 +26,16 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
 
-  gateway-service:
-    image: piomin/gateway-service:1.1-SNAPSHOT
+  united-monolith:
+    image: piomin/united-monolith:1.2-SNAPSHOT
     ports:
       - "8060:8060"
     depends_on:
       discovery-service:
         condition: service_healthy
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
     links:
       - config-service
       - discovery-service
-      - zipkin
-    healthcheck:
-      test: curl --fail http://localhost:8060/actuator/health || exit 1
-      interval: 10s
-      timeout: 5s
-      retries: 4
-
-  united-monolith:
-    image: piomin/united-monolith:1.2-SNAPSHOT
-    ports:
-      - "8080"
-    depends_on:
-      discovery-service:
-        condition: service_healthy
-      gateway-service:
-        condition: service_started
-    links:
-      - config-service
-      - discovery-service
-      - zipkin
-      - gateway-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
 

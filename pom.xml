@@ -23,7 +23,6 @@
     </properties>
 
     <modules>
-        <module>gateway-service</module>
         <module>discovery-service</module>
     </modules>
 
@@ -35,6 +34,8 @@
             </activation>
             <modules>
                 <module>config-service-original</module>
+                
+                <module>gateway-service</module>
                 
                 <module>employee-service</module>
                 <module>department-service</module>
